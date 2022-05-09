@@ -38,5 +38,3 @@ def create_features(size):
 
 def create_labels(size):
     return np.random.randint(0, 2, size)
-
-

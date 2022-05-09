@@ -3,7 +3,6 @@ from utils import args_parser, save_model, load_data
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.linear_model import LinearRegression
 
-import pandas as pd
 import logging
 
 
@@ -31,7 +30,8 @@ def train(argues):
     y_train = load_data("y_train", argues.data_path)
     logging.info("Dataset were gotten")
 
-    model = train_model(x_train, y_train, argues.model_type, argues.n_estimators, argues.random_state)
+    model = train_model(x_train, y_train, argues.model_type,
+                        argues.n_estimators, argues.random_state)
     logging.info("Model was obtained")
 
     save_model(model, argues.model_path, argues.model_name)
@@ -43,5 +43,3 @@ if __name__ == '__main__':
 
     args = args_parser()
     train(args)
-
-

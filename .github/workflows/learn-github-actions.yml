@@ -29,5 +29,5 @@ jobs:
       - name: Run flake8
         run: |
             cd ml_project
-            flake8 tests.py    
+            flake8 prepare.py train.py predict.py tests_utils.py tests.py  
 
