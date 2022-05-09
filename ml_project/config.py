@@ -9,6 +9,7 @@ train_size = 0.67
 model_path = "models"
 model_name = "unnamed_model"
 data_path = "data"
+data_name = "heart_cleveland_upload.csv"
 solution_path = "solutions"
 solution_name = "unnamed_solution.csv"
-data_name = "heart_cleveland_upload.csv"
+

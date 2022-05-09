@@ -9,16 +9,16 @@ def predict_model(model, features: pd.DataFrame):
 
 
 def predict(argues):
-    model = load_model(argues)
+    model = load_model(argues.model_path, argues.model_name)
     logging.info("Model was loaded")
 
-    features = load_data("x_test", argues)
+    features = load_data("x_test", argues.data_path)
     logging.info("Features were loaded")
 
     predicts = predict_model(model, features)
     logging.info("Features were obtained")
 
-    save_solution(predicts, argues)
+    save_solution(predicts, argues.solution_path, argues.solution_name)
     logging.info("Solution was saved")
 
 
