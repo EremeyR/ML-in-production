@@ -1,8 +1,7 @@
 import logging
 import pandas as pd
 
-from utils import args_parser, load_model, safe_solution
-from prepare import get_dataset
+from utils import args_parser, load_model, safe_solution, load_data
 
 
 def predict_model(model, features: pd.DataFrame):
@@ -12,7 +11,7 @@ def predict_model(model, features: pd.DataFrame):
 def predict(argues):
     model = load_model(argues)
 
-    _, features, _, _ = get_dataset(argues)
+    features = load_data("x_test", argues)
 
     predicts = predict_model(model, features)
 

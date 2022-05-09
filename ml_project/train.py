@@ -1,5 +1,4 @@
-from utils import args_parser, save_model
-from prepare import get_dataset
+from utils import args_parser, save_model, load_data
 
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.linear_model import LinearRegression
@@ -28,7 +27,8 @@ def train_model(features: pd.DataFrame, target: pd.DataFrame, argues):
 
 
 def train(argues):
-    x_train, _, y_train, _ = get_dataset(argues)
+    x_train = load_data("x_train", argues)
+    y_train = load_data("y_train", argues)
     logging.info("Dataset were gotten")
 
     model = train_model(x_train, y_train, argues)

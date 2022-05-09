@@ -35,6 +35,15 @@ def load_model(argues):
     return model
 
 
+def load_data(data_type: str, argues):
+    if data_type not in ["x_train", "x_test", "y_train", "y_test"]:
+        raise "Unknown dataset type : {}".format(data_type)
+
+    with open(f'{argues.data_path}/prepared_data.pickle', 'rb') as f:
+        data = pickle.load(f)
+    return data[data_type]
+
+
 def safe_solution(predicts: np.ndarray, argues) -> None:
     with open(f"{argues.solution_path}/{argues.solution_name}", 'w') as fout:
         print('Id', 'Prediction', sep=',', file=fout)
