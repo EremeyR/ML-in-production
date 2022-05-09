@@ -4,11 +4,11 @@ from prepare import get_dataset
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.linear_model import LinearRegression
 
-import pandas
+import pandas as pd
 import logging
 
 
-def train_model(features: pandas.DataFrame, target: pandas.DataFrame, argues):
+def train_model(features: pd.DataFrame, target: pd.DataFrame, argues):
     if argues.model_type == "RandomForestRegressor":
         model = RandomForestRegressor(
             n_estimators=argues.n_estimators, random_state=argues.random_state,

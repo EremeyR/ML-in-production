@@ -6,6 +6,9 @@ n_jobs = 4
 train_size = 0.67
 
 # save/load parameters
-model_path = "models/"
+model_path = "models"
 model_name = "unnamed_model"
-data_path = "data/heart_cleveland_upload.csv"
+data_path = "data"
+solution_path = "solutions"
+solution_name = "unnamed_solution.csv"
+data_name = "heart_cleveland_upload.csv"
