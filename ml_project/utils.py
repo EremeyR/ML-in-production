@@ -1,23 +1,32 @@
 import argparse
+import pickle
 
-from config import lr
+from config import model_type, n_estimators, random_state, n_jobs, train_size,\
+    model_path, model_name, data_path
+
 
 def args_parser():
     parser = argparse.ArgumentParser(description='Listen Attend and Spell')
     # general
-    parser.add_argument('--input-dim', type=int, default=40, help='input dimension')
-    parser.add_argument('--encoder-hidden-size', type=int, default=512, help='encoder hidden size')
-    parser.add_argument('--decoder-hidden-size', type=int, default=1024, help='decoder hidden size')
-    parser.add_argument('--num-layers', type=int, default=4, help='number of encoder layers')
-    parser.add_argument('--embedding-dim', type=int, default=512, help='embedding dimension')
-    parser.add_argument('--end-epoch', type=int, default=150, help='training epoch size.')
-    parser.add_argument('--lr', type=float, default=lr, help='start learning rate')
-    parser.add_argument('--lr-step', type=int, default=5, help='period of learning rate decay')
-    parser.add_argument('--optimizer', default='adam', help='optimizer')
-    parser.add_argument('--weight-decay', type=float, default=0.0, help='weight decay')
-    parser.add_argument('--mom', type=float, default=0.9, help='momentum')
-    parser.add_argument('--emb-size', type=int, default=512, help='embedding length')
-    parser.add_argument('--batch-size', type=int, default=32, help='batch size in each context')
-    parser.add_argument('--checkpoint', type=str, default=None, help='checkpoint')
+    parser.add_argument('--model_type', type=str, default=model_type, help='model type')
+    parser.add_argument('--n_estimators', type=int, default=n_estimators, help='number of trees')
+    parser.add_argument('--random_state', type=int, default=random_state, help=' sklearn random state')
+    parser.add_argument('--n_jobs', type=int, default=n_jobs, help='n_jobs')
+    parser.add_argument('--train_size', type=float, default=train_size, help='train size')
+    parser.add_argument('--model_path', type=str, default=model_path, help='model path')
+    parser.add_argument('--model_name', type=str, default=model_name, help='model name')
+    parser.add_argument('--data_path', type=str, default=data_path, help='data path')
     args = parser.parse_args()
     return args
+
+
+def save_model(model, argues):
+    with open(f'{argues.data_path}/{argues.data_name}.pickle', 'wb') as f:
+        pickle.dump(model, f)
+
+
+def load_model(argues):
+    with open(f'{argues.data_path}/{argues.data_name}.pickle', 'wb') as f:
+        model = pickle.load(f)
+
+    return model
