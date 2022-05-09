@@ -1,3 +1,4 @@
+import logging
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
@@ -19,9 +20,13 @@ def get_dataset(argues):
 
 def prepare_data(argues):
     x_train, x_test, y_train, y_test = get_dataset(argues)
+    logging.info(f"Features and labels were gotten from {argues.data_name}")
     save_prepared_data(x_train, x_test, y_train, y_test, argues)
+    logging.info(f"Features and labels were saved to {argues.data_path}/prepared_data.pickle")
 
 
 if __name__ == '__main__':
+    logging.basicConfig(level=logging.INFO)
+
     args = args_parser()
     prepare_data(args)

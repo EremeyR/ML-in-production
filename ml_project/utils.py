@@ -1,3 +1,4 @@
+import logging
 import argparse
 import pickle
 import numpy as np
@@ -25,33 +26,55 @@ def args_parser():
 
 
 def save_model(model, argues):
-    with open(f'{argues.model_path}/{argues.model_name}.pickle', 'wb') as f:
-        pickle.dump(model, f)
+    try:
+        with open(f'{argues.model_path}/{argues.model_name}.pickle', 'wb') as f:
+            pickle.dump(model, f)
+    except Exception:
+        logging.error("model saving error")
+        raise OSError("model saving error")
 
 
 def load_model(argues):
-    with open(f'{argues.model_path}/{argues.model_name}.pickle', 'rb') as f:
-        model = pickle.load(f)
+    try:
+        with open(f'{argues.model_path}/{argues.model_name}.pickle', 'rb') as f:
+            model = pickle.load(f)
+    except Exception:
+        logging.error("model loading error")
+        raise OSError("model loading error")
+
     return model
 
 
 def load_data(data_type: str, argues):
     if data_type not in ["x_train", "x_test", "y_train", "y_test"]:
-        raise "Unknown dataset type : {}".format(data_type)
+        logging.error(f"Unknown dataset type : {data_type}")
+        raise Exception(f"Unknown dataset type : {data_type}")
+    try:
+        with open(f'{argues.data_path}/prepared_data.pickle', 'rb') as f:
+            data = pickle.load(f)
+    except Exception:
+        logging.error("data loading error")
+        raise OSError("data loading error")
 
-    with open(f'{argues.data_path}/prepared_data.pickle', 'rb') as f:
-        data = pickle.load(f)
     return data[data_type]
 
 
-def safe_solution(predicts: np.ndarray, argues) -> None:
-    with open(f"{argues.solution_path}/{argues.solution_name}", 'w') as fout:
-        print('Id', 'Prediction', sep=',', file=fout)
-        for i, prediction in enumerate(predicts):
-            print(i, int(prediction), sep=',', file=fout)
+def save_solution(predicts: np.ndarray, argues) -> None:
+    try:
+        with open(f"{argues.solution_path}/{argues.solution_name}", 'w') as fout:
+            print('Id', 'Prediction', sep=',', file=fout)
+            for i, prediction in enumerate(predicts):
+                print(i, int(prediction), sep=',', file=fout)
+    except Exception:
+        logging.error("solution saving error")
+        raise OSError("solution saving error")
 
 
 def save_prepared_data(x_train, x_test, y_train, y_test, argues):
-    with open(f'{argues.data_path}/prepared_data.pickle', 'wb') as f:
-        pickle.dump({"x_train": x_train, "x_test": x_test,
-                     "y_train": y_train, "y_test": y_test}, f)
+    try:
+        with open(f'{argues.data_path}/prepared_data.pickle', 'wb') as f:
+            pickle.dump({"x_train": x_train, "x_test": x_test,
+                         "y_train": y_train, "y_test": y_test}, f)
+    except Exception:
+        logging.error("prepared data saving error")
+        raise OSError("prepared data saving error")
