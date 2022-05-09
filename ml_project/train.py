@@ -1,4 +1,4 @@
-from utils import args_parser
+from utils import args_parser, save_model
 from prepare import get_dataset
 
 from sklearn.ensemble import RandomForestRegressor
@@ -24,6 +24,7 @@ def train_model(features: pandas.DataFrame, target: pandas.DataFrame, argues):
 def train(argues):
     x_train, _, y_train, _ = get_dataset(argues)
     model = train_model(x_train, y_train, argues)
+    save_model(model, argues)
 
 
 if __name__ == '__main__':
