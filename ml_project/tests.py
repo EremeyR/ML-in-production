@@ -17,6 +17,7 @@ class TestStringMethods(unittest.TestCase):
 
     def test_predict(self):
         args = Args()
+        prp.prepare_data(args)
         prd.predict(args)
 
     def test_load_dataset(self):
