@@ -10,6 +10,6 @@ model_path = "models"
 model_name = "unnamed_model"
 data_path = "data"
 data_name = "heart_cleveland_upload.csv"
-solution_path = "solutions"
+solution_path = "."
 solution_name = "unnamed_solution.csv"
 
