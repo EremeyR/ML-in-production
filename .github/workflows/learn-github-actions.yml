@@ -13,6 +13,6 @@ jobs:
         run: pip install -r ml_project/requirements.txt
       - name: Run tests
         run: cd ml_project
-        run: python tests.py
+             python tests.py
       
 
