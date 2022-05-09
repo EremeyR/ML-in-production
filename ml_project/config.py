@@ -7,7 +7,7 @@ train_size = 0.67
 
 # save/load parameters
 model_path = "models"
-model_name = "unnamed_model"
+model_name = "default_model"
 data_path = "data"
 data_name = "heart_cleveland_upload.csv"
 solution_path = "."

@@ -23,16 +23,6 @@ class TestStringMethods(unittest.TestCase):
         args = Args()
         prp.load_dataset(args.data_path, args.data_name, args.train_size, args.random_state)
 
-    def test_load_dataset_from_wrong_path(self):
-        args = Args()
-        args.data_path = "wrong path"
-
-        try:
-            prp.load_dataset(args.data_path, args.data_name, args.train_size, args.random_state)
-            self.fail()
-        except OSError:
-            pass
-
     def test_train_model(self):
         args = Args()
         features = create_features(100)
