@@ -1,21 +1,24 @@
-import utils
-
+import json
+from utils import CONFIG_PATH
 import pandas as pd
 import numpy as np
 
 
 class Args:
-    model_type = utils.model_type
-    n_estimators = utils.n_estimators
-    random_state = utils.random_state
-    n_jobs = utils.n_jobs
-    train_size = utils.train_size
-    model_path = utils.model_path
-    model_name = utils.model_name
-    solution_path = utils.solution_path
-    solution_name = utils.solution_name
-    data_path = utils.data_path
-    data_name = utils.data_name
+    with open(CONFIG_PATH, 'r', encoding='utf-8') as fh:
+        config = json.load(fh)
+
+    model_type = config["model_type"]
+    n_estimators = config["n_estimators"]
+    random_state = config["random_state"]
+    n_jobs = config["n_jobs"]
+    train_size = config["train_size"]
+    model_path = config["model_path"]
+    model_name = config["model_name"]
+    solution_path = config["solution_path"]
+    solution_name = config["solution_name"]
+    data_path = config["data_path"]
+    data_name = config["data_name"]
 
 
 def create_features(size):

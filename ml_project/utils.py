@@ -3,23 +3,26 @@ import argparse
 import pickle
 import numpy as np
 
-from config import model_type, n_estimators, random_state, n_jobs, train_size,\
-    model_path, model_name, data_path, data_name, solution_path, solution_name
+import json
+CONFIG_PATH = 'configs/random_forest_config.json'
 
 
 def args_parser():
+    with open(CONFIG_PATH, 'r', encoding='utf-8') as fh:
+        config = json.load(fh)
+
     parser = argparse.ArgumentParser(description='Listen Attend and Spell')
     # general
-    parser.add_argument('--model-type', type=str, default=model_type, help='model type')
-    parser.add_argument('--n-estimators', type=int, default=n_estimators, help='number of trees')
-    parser.add_argument('--n-jobs', type=int, default=n_jobs, help='n_jobs')
-    parser.add_argument('--train-size', type=float, default=train_size, help='train size')
-    parser.add_argument('--model-path', type=str, default=model_path, help='model path')
-    parser.add_argument('--model-name', type=str, default=model_name, help='model name')
-    parser.add_argument('--solution-path', type=str, default=solution_path, help='solution path')
-    parser.add_argument('--solution-name', type=str, default=solution_name, help='solution name')
-    parser.add_argument('--data-path', type=str, default=data_path, help='data path')
-    parser.add_argument('--data-name', type=str, default=data_name, help='data name')
+    parser.add_argument('--model-type', type=str, default=config["model_type"], help='model type')
+    parser.add_argument('--n-estimators', type=int, default=config["n_estimators"], help='number of trees')
+    parser.add_argument('--n-jobs', type=int, default=config["n_jobs"], help='n_jobs')
+    parser.add_argument('--train-size', type=float, default=config["train_size"], help='train size')
+    parser.add_argument('--model-path', type=str, default=config["model_path"], help='model path')
+    parser.add_argument('--model-name', type=str, default=config["model_name"], help='model name')
+    parser.add_argument('--solution-path', type=str, default=config["solution_path"], help='solution path')
+    parser.add_argument('--solution-name', type=str, default=config["solution_name"], help='solution name')
+    parser.add_argument('--data-path', type=str, default=config["data_path"], help='data path')
+    parser.add_argument('--data-name', type=str, default=config["data_name"], help='data name')
     args = parser.parse_args()
     return args
 
