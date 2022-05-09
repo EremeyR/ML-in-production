@@ -63,7 +63,7 @@ def load_data(data_type: str, path):
 
 def save_solution(predicts: np.ndarray, path, name) -> None:
     try:
-        with open(f"{path}/{name}", 'w') as fout:
+        with open(f"{path}/{name}.csv", 'w') as fout:
             print('Id', 'Prediction', sep=',', file=fout)
             for i, prediction in enumerate(predicts):
                 print(i, int(prediction), sep=',', file=fout)
