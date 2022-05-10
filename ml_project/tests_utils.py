@@ -10,7 +10,6 @@ class Args:
 
     model_type = config["model_type"]
     n_estimators = config["n_estimators"]
-    random_state = config["random_state"]
     n_jobs = config["n_jobs"]
     train_size = config["train_size"]
     model_path = config["model_path"]
