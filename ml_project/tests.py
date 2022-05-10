@@ -23,22 +23,19 @@ class TestStringMethods(unittest.TestCase):
 
     def test_load_dataset(self):
         args = Args()
-        prp.load_dataset(args.data_path, args.data_name, args.train_size,
-                         args.random_state)
+        prp.load_dataset(args.data_path, args.data_name, args.train_size)
 
     def test_train_model(self):
         args = Args()
         features = create_features(100)
         labels = create_labels(100)
-        trn.train_model(features, labels, args.model_type, args.n_estimators,
-                        args.random_state)
+        trn.train_model(features, labels, args.model_type, args.n_estimators)
 
     def test_train_model_with_short_data(self):
         args = Args()
         features = create_features(1)
         labels = create_labels(1)
-        trn.train_model(features, labels, args.model_type, args.n_estimators,
-                        args.random_state)
+        trn.train_model(features, labels, args.model_type, args.n_estimators)
 
     def test_predict_model(self):
         args = Args()
@@ -54,17 +51,17 @@ class TestStringMethods(unittest.TestCase):
 
     def test_prepare_train_predict_RandomForest(self):
         x_train, x_test, y_train, y_test = \
-            prp.load_dataset("data", "heart_cleveland_upload.csv", 0.67, 1)
+            prp.load_dataset("data", "heart_cleveland_upload.csv", 0.67)
         model = trn.train_model(x_train, y_train, "RandomForestRegressor",
-                                100, 1)
+                                100)
         predicts = prd.predict_model(model, x_test)
         utl.save_solution(predicts, ".", "RandomForest solution")
 
     def test_prepare_train_predict_LinearRegression(self):
         x_train, x_test, y_train, y_test = \
-            prp.load_dataset("data", "heart_cleveland_upload.csv", 0.67, 1)
+            prp.load_dataset("data", "heart_cleveland_upload.csv", 0.67)
         model = trn.train_model(x_train, y_train, "LinearRegression",
-                                None, None)
+                                None)
         predicts = prd.predict_model(model, x_test)
         utl.save_solution(predicts, ".", "RandomForest solution")
 

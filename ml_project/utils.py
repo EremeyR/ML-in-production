@@ -2,6 +2,9 @@ import logging
 import argparse
 import pickle
 import numpy as np
+import pandas as pd
+
+from sklearn.base import BaseEstimator, TransformerMixin
 
 import json
 CONFIG_PATH = 'configs/random_forest_config.json'
@@ -25,6 +28,25 @@ def args_parser():
     parser.add_argument('--data-name', type=str, default=config["data_name"], help='data name')
     args = parser.parse_args()
     return args
+
+
+class OHETransformer(BaseEstimator, TransformerMixin):
+    def __init__(self, columns_for_encoding: list):
+        self.col_for_enc = columns_for_encoding
+
+    def fit(self, X, y=None):
+        return self
+
+    def transform(self, X, y=None):
+        X_ = X.copy()
+
+        for col in self.col_for_enc:
+            ohe_cols = pd.get_dummies(X_[col], prefix=col)
+            X_ = X_.join(ohe_cols)
+
+            del X_[col]
+
+        return X_
 
 
 def save_model(model, path, name):

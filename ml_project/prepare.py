@@ -5,7 +5,7 @@ from sklearn.model_selection import train_test_split
 from utils import save_prepared_data, args_parser
 
 
-def load_dataset(path, name, trn_size, rndm_st):
+def load_dataset(path, name, trn_size):
     try:
         df = pd.read_csv(f"{path}/{name}")
     except Exception:
@@ -18,15 +18,14 @@ def load_dataset(path, name, trn_size, rndm_st):
 
     x_train, x_test, y_train, y_test = train_test_split(x, y,
                                                         train_size=trn_size,
-                                                        random_state=rndm_st)
+                                                        random_state=42)
     return x_train, x_test, y_train, y_test
 
 
 def prepare_data(argues):
     x_train, x_test, y_train, y_test = load_dataset(argues.data_path,
                                                     argues.data_name,
-                                                    argues.train_size,
-                                                    argues.random_state)
+                                                    argues.train_size)
     logging.info(f"Features and labels were gotten from {argues.data_name}")
     save_prepared_data(x_train, x_test, y_train, y_test, argues.data_path)
     logging.info(f"Features and labels were saved to {argues.data_path}"

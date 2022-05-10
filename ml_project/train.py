@@ -1,15 +1,17 @@
-from utils import args_parser, save_model, load_data
+from utils import args_parser, save_model, load_data, OHETransformer
 
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.linear_model import LinearRegression
+from sklearn.pipeline import FeatureUnion, Pipeline, make_pipeline
+
 
 import logging
 
 
-def train_model(features, target, model_type, n_estimators, random_state):
+def train_model(features, target, model_type, n_estimators):
     if model_type == "RandomForestRegressor":
         model = RandomForestRegressor(
-            n_estimators=n_estimators, random_state=random_state
+            n_estimators=n_estimators, random_state=42
         )
         logging.info("RandomForestRegressor was initialized")
     elif model_type == "LinearRegression":
@@ -31,7 +33,7 @@ def train(argues):
     logging.info("Dataset were gotten")
 
     model = train_model(x_train, y_train, argues.model_type,
-                        argues.n_estimators, argues.random_state)
+                        argues.n_estimators)
     logging.info("Model was obtained")
 
     save_model(model, argues.model_path, argues.model_name)
