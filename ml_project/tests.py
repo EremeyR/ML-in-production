@@ -56,12 +56,10 @@ class TestStringMethods(unittest.TestCase):
         prd.predict_model(model, test_features)
 
     def test_predict_model_with_short_data(self):
-        args = Args()
         train_features = create_features(100)
         labels = create_labels(100)
         model = trn.train_model(train_features, labels, "LinearRegression",
-                                0, "sex cp fbs restecg exang slope ca thal")
-        model = utl.load_model(args.model_path, args.model_name)
+                                0, "")
         test_features = create_features(1)
         prd.predict_model(model, test_features)
 
@@ -80,6 +78,28 @@ class TestStringMethods(unittest.TestCase):
                                 0, "sex cp fbs restecg exang slope ca thal")
         predicts = prd.predict_model(model, x_test)
         utl.save_solution(predicts, ".", "RandomForest solution")
+
+    def test_transformer_with_one_col(self):
+        features = create_features(1000)
+        transformer = utl.OHETransformer(["sex"])
+        transformed_features = transformer.fit_transform(features)
+
+        self.assertEqual(features.shape[0], transformed_features.shape[0])
+        self.assertEqual(features.shape[1], transformed_features.shape[1] - 1)
+
+        transformer = utl.OHETransformer(["cp"])
+        transformed_features = transformer.fit_transform(features)
+
+        self.assertEqual(features.shape[0], transformed_features.shape[0])
+        self.assertEqual(features.shape[1], transformed_features.shape[1] - 3)
+
+    def test_transformer_with_several_cols(self):
+        features = create_features(100)
+        transformer = utl.OHETransformer(["sex", "cp"])
+        transformed_features = transformer.fit_transform(features)
+
+        self.assertEqual(features.shape[0], transformed_features.shape[0])
+        self.assertEqual(features.shape[1], transformed_features.shape[1] - 4)
 
 
 if __name__ == '__main__':

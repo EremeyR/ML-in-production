@@ -33,9 +33,10 @@ def train_model(features, target, model_type, n_estimators,
 
     try:
         model.fit(features, target)
-
     except KeyError:
         logging.error("Incorrect column name")
+        raise KeyError("Incorrect column name")
+
     logging.info("Fitting was ended")
     return model
 
