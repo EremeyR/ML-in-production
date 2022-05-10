@@ -5,6 +5,7 @@
   "train_size": 0.75,
   "model_path": "models",
   "model_name": "default_model",
+  "categorical_cols": "sex cp",
   "data_path": "data",
   "data_name": "heart_cleveland_upload.csv",
   "solution_path": ".",

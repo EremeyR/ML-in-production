@@ -5,10 +5,36 @@ import numpy as np
 import pandas as pd
 
 from sklearn.base import BaseEstimator, TransformerMixin
+from sklearn.preprocessing import OneHotEncoder
 
 import json
 CONFIG_PATH = 'configs/random_forest_config.json'
 
+
+class OHETransformer(BaseEstimator, TransformerMixin):
+    def __init__(self, columns_for_encoding: list):
+        self.col_for_enc = columns_for_encoding
+
+        self.one_hot_encoders = {}
+        for col in columns_for_encoding:
+            self.one_hot_encoders[col] = OneHotEncoder(sparse=None)
+
+    def fit(self, x, y=None):
+        for col in self.col_for_enc:
+            self.one_hot_encoders[col].fit(x.loc[:, [col]])
+        print(self.one_hot_encoders.keys())
+        return self
+
+    def transform(self, x, y=None):
+        x_ = x.copy()
+
+        for col in self.col_for_enc:
+            ohe_cols = self.one_hot_encoders[col].transform(x_.loc[:, [col]])
+            x_[[f"ohe_{col}_{i}" for i in range(ohe_cols.shape[1])]] = ohe_cols
+
+            del x_[col]
+
+        return x_
 
 def args_parser():
     with open(CONFIG_PATH, 'r', encoding='utf-8') as fh:
@@ -22,6 +48,7 @@ def args_parser():
     parser.add_argument('--train-size', type=float, default=config["train_size"], help='train size')
     parser.add_argument('--model-path', type=str, default=config["model_path"], help='model path')
     parser.add_argument('--model-name', type=str, default=config["model_name"], help='model name')
+    parser.add_argument('--categorical-cols', type=str, default=config["categorical_cols"], help='cols for OHE')
     parser.add_argument('--solution-path', type=str, default=config["solution_path"], help='solution path')
     parser.add_argument('--solution-name', type=str, default=config["solution_name"], help='solution name')
     parser.add_argument('--data-path', type=str, default=config["data_path"], help='data path')

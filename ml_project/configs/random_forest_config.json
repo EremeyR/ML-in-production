@@ -5,6 +5,7 @@
   "train_size": 0.67,
   "model_path": "models",
   "model_name": "default_model",
+  "categorical_cols": "sex cp fbs restecg exang slope ca thal",
   "data_path": "data",
   "data_name": "heart_cleveland_upload.csv",
   "solution_path": ".",

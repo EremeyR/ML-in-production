@@ -14,6 +14,7 @@ class Args:
     train_size = config["train_size"]
     model_path = config["model_path"]
     model_name = config["model_name"]
+    categorical_cols = config["categorical_cols"]
     solution_path = config["solution_path"]
     solution_name = config["solution_name"]
     data_path = config["data_path"]

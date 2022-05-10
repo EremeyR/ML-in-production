@@ -1,14 +1,16 @@
-from utils import args_parser, save_model, load_data, OHETransformer
+from utils import args_parser, save_model, load_data
 
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.linear_model import LinearRegression
-from sklearn.pipeline import FeatureUnion, Pipeline, make_pipeline
+from sklearn.pipeline import Pipeline
 
+from utils import OHETransformer
 
 import logging
 
 
-def train_model(features, target, model_type, n_estimators):
+def train_model(features, target, model_type, n_estimators,
+                categorical_cols: str):
     if model_type == "RandomForestRegressor":
         model = RandomForestRegressor(
             n_estimators=n_estimators, random_state=42
@@ -22,7 +24,18 @@ def train_model(features, target, model_type, n_estimators):
         raise NotImplementedError()
     logging.info("Fitting was started")
 
-    model.fit(features, target)
+    if categorical_cols != "":
+        model = Pipeline(steps=[
+                       ('experimental_trans', OHETransformer(
+                           categorical_cols.split())),
+                       ('linear_model', LinearRegression())
+        ])
+
+    try:
+        model.fit(features, target)
+
+    except KeyError:
+        logging.error("Incorrect column name")
     logging.info("Fitting was ended")
     return model
 
@@ -33,7 +46,7 @@ def train(argues):
     logging.info("Dataset were gotten")
 
     model = train_model(x_train, y_train, argues.model_type,
-                        argues.n_estimators)
+                        argues.n_estimators, argues.categorical_cols)
     logging.info("Model was obtained")
 
     save_model(model, argues.model_path, argues.model_name)
